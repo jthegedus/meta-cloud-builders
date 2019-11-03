@@ -78,7 +78,7 @@ gcloud beta builds triggers import --source=.cicd/triggers/builders.trigger.yaml
 
 ## Schedule
 
-WIP: the message-body might need changing to run a GitHub-based Trigger.
+WIP: the message-body might need changing to run a GitHub-based Trigger - see this [Cloud Build Issue](https://issuetracker.google.com/issues/142550612).
 
 With custom Cloud Builders you are almost always going to want the latest images from the source. Since we cannot trigger off of changes to external repos, we can at least rebuild these containers on a regular basis, say daily or weekly.
 
