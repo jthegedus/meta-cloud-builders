@@ -1,4 +1,4 @@
-# meta-cloud-builder
+# Meta Cloud Builder
 
 > Build custom builders from a config file.
 
