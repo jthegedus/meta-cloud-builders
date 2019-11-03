@@ -2,7 +2,7 @@
 
 > Build custom builders from a config file.
 
-This build step invokes `gcloud builds submit ...` for custom cloud-builders specified in the configuration file.
+This build step invokes `gcloud builds submit ...` for custom cloud-builders specified in a configuration file.
 
 ## Setup
 
@@ -49,7 +49,7 @@ tags:
 
 ## Triggers
 
-Now with [Cloud Build Triggers being created via `.yaml` config](https://cloud.google.com/blog/products/devops-sre/cloud-build-brings-advanced-cicd-capabilities-to-github) we can run this `*.cloudbuild.yaml` whenever we make a change to this config file.
+Now with [Cloud Build Triggers being created via `.yaml` config](https://cloud.google.com/blog/products/devops-sre/cloud-build-brings-advanced-cicd-capabilities-to-github) we can run this `builders.cloudbuild.yaml` whenever we make a change to this config file.
 
 ```yaml
 # .cicd/triggers/builders.trigger.yaml
