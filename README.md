@@ -4,6 +4,11 @@
 
 This build step invokes `gcloud builds submit ...` for custom cloud-builders specified in a configuration file.
 
+* [Setup](#setup)
+* [Usage](#usage)
+* [Triggers](#triggers)
+* [Schedule](#schedule)
+
 ## Setup
 
 Manually build this image into your project once. Similar to [`cloud-builders-community`](https://github.com/GoogleCloudPlatform/cloud-builders-community#build-the-build-step-from-source/).
@@ -70,6 +75,30 @@ Import the Trigger:
 ```shell
 gcloud beta builds triggers import --source=.cicd/triggers/builders.trigger.yaml
 ```
+
+## Schedule
+
+WIP: the message-body might need changing to run a GitHub-based Trigger.
+
+With custom Cloud Builders you are almost always going to want the latest images from the source. Since we cannot trigger off of changes to external repos, we can at least rebuild these containers on a regular basis, say daily or weekly.
+
+```shell
+gcloud scheduler jobs create http \
+  build-custom-cloud-builders \
+  --description="Build custom cloud-builders on a schedule" \
+  --schedule="0 0 * * SUN" \
+  --time-zone="AEST"
+  --http-method="POST" \
+  --uri=https://cloudbuild.googleapis.com/v1/projects/[PROJECTID]/triggers/[TRIGGERID]:run \
+  --message-body={"branchName": "master"} \
+  --oauth-service-account-email=[EMAIL_ADDRESS]@appspot.gserviceaccount.com
+```
+
+Just fill in `PROJECTID`, `TRIGGERID` and create a Service Account and fill in the `EMAIL_ADDRESS` accordingly.
+
+Suggested schedule intervals:
+- daily: `0 0 * * *`
+- every sunday: `0 0 * * SUN`
 
 ## License
 
