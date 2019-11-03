@@ -1,0 +1,9 @@
+[
+    {
+        "builders": [
+            "cancelot",
+            "cache"
+        ],
+        "repo": "https://github.com/GoogleCloudPlatform/cloud-builders-community"
+    }
+]
