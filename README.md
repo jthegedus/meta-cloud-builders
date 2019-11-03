@@ -70,3 +70,7 @@ Import the Trigger:
 ```shell
 gcloud beta builds triggers import --source=.cicd/triggers/builders.trigger.yaml
 ```
+
+## License
+
+[MIT License](https://github.com/jthegedus/meta-cloud-builder/blob/master/LICENSE)
