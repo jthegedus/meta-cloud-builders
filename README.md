@@ -29,12 +29,13 @@ Create a `.yaml` or `.json` file with key-value-pairs for the repo and cloud-bui
 
 ```yaml
 # .cicd/builders/custom-builders.yaml
-- name: meta-cloud-builder
-  repo: https://github.com/jthegedus/meta-cloud-builder
-- name: cancelot
-  repo: https://github.com/Go ogleCloudPlatform/cloud-builders-community
-- name: cache
-  repo: https://github.com/Go ogleCloudPlatform/cloud-builders-community
+- repo: https://github.com/jthegedus/meta-cloud-builder
+  builders:
+    - meta-cloud-builder
+- repo: https://github.com/GoogleCloudPlatform/cloud-builders-community
+  builders:
+    - cancelot
+    - cache
 ```
 
 then pass this config file into the `meta-cloud-builder` step as an arg:
