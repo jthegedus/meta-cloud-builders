@@ -6,4 +6,4 @@ github:
     branch: .*
 filename: .meta-cloud-builder/builders.cloudbuild.yaml
 includedFiles:
-  - .meta-cloud-builder/**
+  - ./meta-cloud-builder/**
