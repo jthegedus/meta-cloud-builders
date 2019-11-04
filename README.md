@@ -59,10 +59,11 @@ Now with [Cloud Build Triggers being created via `.yaml` config](https://cloud.g
 
 ```yaml
 # .cicd/triggers/builders.trigger.yaml
-descrtiption: Build custom Cloud Build builders into my gcr project on change
+name: cloud-builders
+description: Build custom Cloud Build builders into my gcr project on change
 github:
   owner: <org/user name>
-  repo: <repo name>
+  name: <repo name>
   branch:
     branch: master
 filename: .cicd/builders.cloudbuild.yaml
