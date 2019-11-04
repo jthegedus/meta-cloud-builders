@@ -5,6 +5,6 @@ github:
   name: meta-cloud-builder
   pullRequest:
     branch: .*
-filename: ./meta-cloud-builder/cloudbuild.yaml
+filename: meta-cloud-builder/cloudbuild.yaml
 includedFiles:
   - ./meta-cloud-builder/**
