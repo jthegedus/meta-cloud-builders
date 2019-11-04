@@ -12,6 +12,7 @@ steps:
       - images
       - list
       - --filter cancelot
+dir: ./meta-cloud-builder
 images:
   - gcr.io/$PROJECT_ID/meta-cloud-builder
 tags: ["cloud-builders-community"]
