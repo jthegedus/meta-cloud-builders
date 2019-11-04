@@ -2,7 +2,7 @@ name: meta-cloud-builder-trigger
 description: "Build & Test meta-cloud-builder into a test project on change"
 github:
   owner: jthegedus
-  repo: meta-cloud-builder
+  name: meta-cloud-builder
   pullRequest:
     branch: .*
 filename: ./meta-cloud-builder/cloudbuild.yaml
