@@ -1,5 +1,5 @@
 name: meta-cloud-builder-trigger
-descrtiption: "Build & Test meta-cloud-builder into a test project on change"
+description: "Build & Test meta-cloud-builder into a test project on change"
 github:
   owner: jthegedus
   repo: meta-cloud-builder
