@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/git
 
-RUN add-apt-repository ppa:rmescandon/yq \
+RUN add-apt-repository -qq ppa:rmescandon/yq \
     && apt-get -qq -y update \
     && apt-get -qq -y install yq jq
 
