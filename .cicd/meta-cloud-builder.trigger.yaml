@@ -1,4 +1,4 @@
-descrtiption: Build & Test meta-cloud-builder into a test project on change
+descrtiption: "Build & Test meta-cloud-builder into a test project on change"
 github:
   owner: jthegedus
   repo: meta-cloud-builder
