@@ -43,11 +43,10 @@ jq -r '.[] | .repo' "$config_file" |
         while read -r builder; do
             (
             printf "\n[info] building %s\n" "$builder"
-            # gcloud builds submit \
-            #     --timeout=900s \
-            #     --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
-            #     "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
-            gcloud container images list > "$builder.log" 2>&1
+            gcloud builds submit \
+                --timeout=900s \
+                --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
+                "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
             if [[ $? -ne 0 ]]; then
                 echo "$builder failed" | tee -a ${failure_file}
                 cat "$builder.log"
