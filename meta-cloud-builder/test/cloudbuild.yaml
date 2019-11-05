@@ -4,7 +4,6 @@ steps:
     id: "Build: custom images"
     waitFor:
       - "-"
-    dir: ./meta-cloud-builder/test
     args:
       - ./test-config.yaml
   # check if cancelot img was built by the test-config.yaml
@@ -12,7 +11,6 @@ steps:
     id: "Validate: check final cancelot image"
     waitFor:
       - "Build: custom images"
-    dir: ./meta-cloud-builder/test
     args:
       - container
       - images
@@ -24,7 +22,6 @@ steps:
     id: "Validate: check final cache image"
     waitFor:
       - "Build: custom images"
-    dir: ./meta-cloud-builder/test
     args:
       - container
       - images
