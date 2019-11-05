@@ -37,13 +37,14 @@ jq -r '.[] | .repo' "$config_file" |
 
         # for each builder in the config for this repo, build with gcloud
         jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
-        while read -r builder; do
-            printf "\n[info] building %s\n" "$builder"
-            gcloud builds submit \
-                --timeout=900s \
-                --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
-                "$workspace_dir/$final_path/$builder" &
-        done
+        (
+            while read -r builder; do
+                printf "\n[info] building %s\n" "$builder"
+                gcloud builds submit \
+                    --timeout=900s \
+                    --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
+                    "$workspace_dir/$final_path/$builder" &
+            done
+        ) &
     done
-
 wait
