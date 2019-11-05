@@ -5,38 +5,6 @@ steps:
       - "-"
     dir: ./meta-cloud-builder
     args: ["build", "-t", "gcr.io/$PROJECT_ID/meta-cloud-builder", "."]
-  # sanity check
-  - name: gcr.io/$PROJECT_ID/meta-cloud-builder
-    id: "Build: custom images"
-    waitFor:
-      - "Build: meta builder image"
-    dir: ./meta-cloud-builder
-    args:
-      - ./test-config.yaml
-  # check if cancelot img was built by the test-config.yaml
-  - name: gcr.io/cloud-builders/gcloud
-    id: "Validate: check final cancelot image"
-    waitFor:
-      - "Build: custom images"
-    dir: ./meta-cloud-builder
-    args:
-      - container
-      - images
-      - list
-      - --filter
-      - cancelot
-  # check if cache img was built by the test-config.yaml
-  - name: gcr.io/cloud-builders/gcloud
-    id: "Validate: check final cache image"
-    waitFor:
-      - "Build: custom images"
-    dir: ./meta-cloud-builder
-    args:
-      - container
-      - images
-      - list
-      - --filter
-      - cache
 images:
   - gcr.io/$PROJECT_ID/meta-cloud-builder
 tags: ["cloud-builders-community"]
