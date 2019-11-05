@@ -53,8 +53,9 @@ jq -r '.[] | .repo' "$config_file" |
                 fi
             ) &
         done
-        wait
     done
+
+wait
 
 
 # Check if there is any failure.
