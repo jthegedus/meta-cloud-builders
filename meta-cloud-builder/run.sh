@@ -45,3 +45,5 @@ jq -r '.[] | .repo' "$config_file" |
                 "$workspace_dir/$final_path/$builder" &
         done
     done
+
+wait
