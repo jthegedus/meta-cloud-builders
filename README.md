@@ -102,6 +102,14 @@ Suggested schedule intervals:
 - daily: `0 0 * * *`
 - every sunday: `0 0 * * SUN`
 
+## Test
+
+Run this script from the repo root dir to test the meta-cloud-builder:
+
+```shell
+gcloud builds submit ./meta-cloud-builder/test/ --config=./meta-cloud-builder/test/cloudbuild.yaml
+```
+
 ## License
 
 [MIT License](https://github.com/jthegedus/meta-cloud-builder/blob/master/LICENSE)
