@@ -34,14 +34,14 @@ touch ${failure_file}
 # for each repo, clone to workspace
 jq -r '.[] | .repo' "$config_file" | 
     while read -r url; do
-        printf "[info] cloning repo %s\n" "$url"
-        final_path="${url//https:\/\/github.com\//}"
-        git clone "$url" "$workspace_dir/$final_path"
+        (
+            printf "[info] cloning repo %s\n" "$url"
+            final_path="${url//https:\/\/github.com\//}"
+            git clone "$url" "$workspace_dir/$final_path"
 
-        # for each builder in the config for this repo, build with gcloud
-        jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
-        while read -r builder; do
-            (
+            # for each builder in the config for this repo, build with gcloud
+            jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
+            while read -r builder; do
                 printf "\n[info] building %s\n" "$builder"
                 gcloud builds submit \
                     --timeout=900s \
@@ -51,8 +51,8 @@ jq -r '.[] | .repo' "$config_file" |
                     echo "$builder failed" | tee -a ${failure_file}
                     cat "$builder.log"
                 fi
-            ) &
-        done
+            done
+        ) &
     done
 wait
 
