@@ -13,7 +13,7 @@ steps:
     dir: ./meta-cloud-builder
     args:
       - ./test-config.yaml
-  # check if cancelot was built by the test-config.yaml
+  # check if cancelot img was built by the test-config.yaml
   - name: gcr.io/cloud-builders/gcloud
     id: "Validate: check final cancelot image"
     waitFor:
@@ -25,6 +25,7 @@ steps:
       - list
       - --filter
       - cancelot
+  # check if cache img was built by the test-config.yaml
   - name: gcr.io/cloud-builders/gcloud
     id: "Validate: check final cache image"
     waitFor:
