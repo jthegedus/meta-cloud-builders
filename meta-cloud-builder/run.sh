@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 config_file=""
 workspace_dir="./workspace/builder_repos"
@@ -34,34 +34,36 @@ touch ${failure_file}
 # for each repo, clone to workspace
 jq -r '.[] | .repo' "$config_file" | 
     while read -r url; do
-        (
-            printf "[info] cloning repo %s\n" "$url"
-            final_path="${url//https:\/\/github.com\//}"
-            git clone "$url" "$workspace_dir/$final_path"
+        printf "[info] cloning repo %s\n" "$url"
+        final_path="${url//https:\/\/github.com\//}"
+        git clone "$url" "$workspace_dir/$final_path"
 
-            # for each builder in the config for this repo, build with gcloud
-            jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
-            while read -r builder; do
-                printf "\n[info] building %s\n" "$builder"
-                gcloud builds submit \
-                    --timeout=900s \
-                    --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
-                    "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
-                if [[ $? -ne 0 ]]; then
-                    echo "$builder failed" | tee -a ${failure_file}
-                    cat "$builder.log"
-                fi
-            done
-        ) &
+        # for each builder in the config for this repo, build with gcloud
+        jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
+        while read -r builder; do
+            (
+            printf "\n[info] building %s\n" "$builder"
+            # gcloud builds submit \
+            #     --timeout=900s \
+            #     --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
+            #     "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
+            gcloud container images list > "$builder.log" 2>&1
+            if [[ $? -ne 0 ]]; then
+                echo "$builder failed" | tee -a ${failure_file}
+                cat "$builder.log"
+            fi
+            ) &
+        done
+        wait
     done
-wait
 
 
 # Check if there is any failure.
 if [[ -s ${failure_file} ]]; then
-    echo
-    echo "Some builds failed:"
+    printf "\nSome builds failed:\n"
     cat ${failure_file}
-    echo "Exiting."
+    printf "Exiting.\n"
     exit 1
 fi
+
+printf "All builds succeeded\n"
