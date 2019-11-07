@@ -6,7 +6,7 @@ workspace_dir="./workspace/builder_repos"
 # gcs_log_dir="${GCS_LOG_DIR:-gs//PROJECT_ID.cloudbuild-logs.googleusercontent.com/}"
 # gcs_source_staging_dir="${GCS_SOURCE_STAGING_DIR:-gs//PROJECT_ID_cloudbuild/source}"
 
-if [ $# -ne 1 ]; then
+if [ $# -ge 1 ]; then
     printf "[error] missing path to config file\n"
     exit 1
 fi
