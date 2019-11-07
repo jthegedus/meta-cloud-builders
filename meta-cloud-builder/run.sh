@@ -31,9 +31,6 @@ fi
 
 printf "[info] loading from config file: %s\n" "$config_file"
 
-failure_file=failure.log
-touch ${failure_file}
-
 # for each repo, clone to workspace
 jq -r '.[] | .repo' "$config_file" | 
     while read -r url; do
@@ -49,23 +46,8 @@ jq -r '.[] | .repo' "$config_file" |
                 --async \
                 --timeout="$timeout" \
                 --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
-                "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
+                "$workspace_dir/$final_path/$builder"
                 # --gcs-log-dir="$gcs_log_dir" \
                 # --gcd-source-staging-dir="$gcs_source_staging_dir" \
-            if [[ $? -ne 0 ]]; then
-                echo "$builder failed" | tee -a ${failure_file}
-                cat "$builder.log"
-            fi
         done
     done
-
-
-# Check if there is any failure.
-if [[ -s ${failure_file} ]]; then
-    printf "\nSome builds failed:\n"
-    cat ${failure_file}
-    printf "Exiting.\n"
-    exit 1
-fi
-
-printf "All builds succeeded\n"
