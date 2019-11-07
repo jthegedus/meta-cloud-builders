@@ -44,24 +44,20 @@ jq -r '.[] | .repo' "$config_file" |
         # for each builder in the config for this repo, build with gcloud
         jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
         while read -r builder; do
-            (
-                printf "\n[info] building %s\n" "$builder"
-                gcloud builds submit \
-                    --async \
-                    --timeout="$timeout" \
-                    --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
-                    "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
-                    # --gcs-log-dir="$gcs_log_dir" \
-                    # --gcd-source-staging-dir="$gcs_source_staging_dir" \
-                if [[ $? -ne 0 ]]; then
-                    echo "$builder failed" | tee -a ${failure_file}
-                    cat "$builder.log"
-                fi
-            ) &
+            printf "\n[info] building %s\n" "$builder"
+            gcloud builds submit \
+                --async \
+                --timeout="$timeout" \
+                --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
+                "$workspace_dir/$final_path/$builder" > "$builder.log" 2>&1
+                # --gcs-log-dir="$gcs_log_dir" \
+                # --gcd-source-staging-dir="$gcs_source_staging_dir" \
+            if [[ $? -ne 0 ]]; then
+                echo "$builder failed" | tee -a ${failure_file}
+                cat "$builder.log"
+            fi
         done
     done
-
-wait
 
 
 # Check if there is any failure.
