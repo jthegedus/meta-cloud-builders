@@ -7,6 +7,7 @@ workspace_dir="./workspace/builder_repos"
 # gcs_source_staging_dir="${GCS_SOURCE_STAGING_DIR:-gs//PROJECT_ID_cloudbuild/source}"
 
 if [ $# -ge 1 ]; then
+    echo "$@"
     printf "[error] missing path to config file\n"
     exit 1
 fi
