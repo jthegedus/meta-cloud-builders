@@ -1,10 +1,7 @@
-#!/bin/bash -x
+#!/bin/bash
 
 config_file=""
 workspace_dir="./workspace/builder_repos"
-# timeout="${TIMEOUT:-900}"
-# gcs_log_dir="${GCS_LOG_DIR:-gs//PROJECT_ID.cloudbuild-logs.googleusercontent.com/}"
-# gcs_source_staging_dir="${GCS_SOURCE_STAGING_DIR:-gs//PROJECT_ID_cloudbuild/source}"
 
 if [ ! -f "$1" ]; then
     printf "[error] first arg should be a config file. File %s does NOT exist\n" "$1"
@@ -37,9 +34,11 @@ jq -r '.[] | .repo' "$config_file" |
         jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
         while read -r builder; do
             printf "\n[info] building %s\n" "$builder"
+            set -x
             gcloud builds submit \
                 "${@:2}" \
                 --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
                 "$workspace_dir/$final_path/$builder"
+            set +x
         done
     done
