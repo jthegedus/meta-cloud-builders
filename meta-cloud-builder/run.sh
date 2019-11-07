@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 config_file=""
 workspace_dir="./workspace/builder_repos"
@@ -41,7 +41,5 @@ jq -r '.[] | .repo' "$config_file" |
                 "${@:2}" \
                 --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
                 "$workspace_dir/$final_path/$builder"
-                # --gcs-log-dir="$gcs_log_dir" \
-                # --gcd-source-staging-dir="$gcs_source_staging_dir" \
         done
     done
