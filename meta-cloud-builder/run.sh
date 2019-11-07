@@ -6,14 +6,8 @@ workspace_dir="./workspace/builder_repos"
 # gcs_log_dir="${GCS_LOG_DIR:-gs//PROJECT_ID.cloudbuild-logs.googleusercontent.com/}"
 # gcs_source_staging_dir="${GCS_SOURCE_STAGING_DIR:-gs//PROJECT_ID_cloudbuild/source}"
 
-if [ $# -ge 1 ]; then
-    echo "$@"
-    printf "[error] missing path to config file\n"
-    exit 1
-fi
-
 if [ ! -f "$1" ]; then
-    printf "[error] config file %s does NOT exist\n" "$1"
+    printf "[error] first arg should be a config file. File %s does NOT exist\n" "$1"
     exit 1
 fi
 
