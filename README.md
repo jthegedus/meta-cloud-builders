@@ -1,6 +1,13 @@
-# Meta Cloud Builder
+# Meta Cloud Builders
 
-> Build custom builders from a config file.
+- `meta-cloud-builder`: Build custom cloud build images (builders) from a config file.
+- `meta-cloud-build-triggers`: Watch and deploy Cloud Build Triggers on Trigger (`yaml`) config changes.
+
+# Todo
+
+- [ ] Rewrite readme for multiple builders
+
+---
 
 This build step invokes `gcloud builds submit ...` for custom cloud-builders specified in a configuration file.
 
