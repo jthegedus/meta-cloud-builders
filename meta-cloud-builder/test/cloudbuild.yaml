@@ -8,7 +8,7 @@ steps:
       - ./test-config.yaml
       - --timeout=900
       - --async
-  # should validate async test by checking the cloud build jobs started
+  # should validate async test by checking the cloud build jobs started. Should this even be done? Is it valuable to test gcloud builds submit?
   - name: gcr.io/$PROJECT_ID/meta-cloud-builder
     id: "Build: custom images sequentially"
     waitFor:
