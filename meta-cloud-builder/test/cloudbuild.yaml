@@ -1,16 +1,26 @@
 steps:
   # sanity check
   - name: gcr.io/$PROJECT_ID/meta-cloud-builder
-    id: "Build: custom images"
+    id: "Build: custom images asynchronously"
     waitFor:
       - "-"
     args:
       - ./test-config.yaml
+      - --timeout=900
+      - --async
+  # should validate async test by checking the cloud build jobs started
+  - name: gcr.io/$PROJECT_ID/meta-cloud-builder
+    id: "Build: custom images sequentially"
+    waitFor:
+      - "-"
+    args:
+      - ./test-config.yaml
+      - --timeout=900
   # check if cancelot img was built by the test-config.yaml
   - name: gcr.io/cloud-builders/gcloud
     id: "Validate: check final cancelot image"
     waitFor:
-      - "Build: custom images"
+      - "Build: custom images sequentially"
     args:
       - container
       - images
@@ -21,7 +31,7 @@ steps:
   - name: gcr.io/cloud-builders/gcloud
     id: "Validate: check final cache image"
     waitFor:
-      - "Build: custom images"
+      - "Build: custom images sequentially"
     args:
       - container
       - images
