@@ -16,9 +16,8 @@ Manually build this image into your project once. Similar to [`cloud-builders-co
 ```shell
 # clone
 git clone https://github.com/jthegedus/meta-cloud-builder
-cd jthegedus/meta-cloud-builder
 # build
-gcloud builds submit --config cloudbuild.yaml .
+gcloud builds submit --config jthegedus/meta-cloud-builder/cloudbuild.yaml jthegedus/meta-cloud-builder
 # validate
 gcloud container images list --filter meta-cloud-builder
 ```
@@ -49,9 +48,15 @@ steps:
       - "-"
     args:
       - ".cicd/builders/custom-builders.yaml"
+      - "--async"
+      # other gcloud builds submit flags
 tags:
   - cloud-builders
 ```
+
+You can pass any `gcloud builds submit` flags to the builder except the `--config` and `DIR` aspects.
+
+I would recommend passing the `--async` flag to create each builder concurrently.
 
 ## Triggers
 
