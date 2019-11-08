@@ -9,16 +9,6 @@ This build step invokes `gcloud builds submit ...` for custom cloud-builders spe
 * [Triggers](#triggers)
 * [Schedule](#schedule)
 
-## Todo
-
-- support --async as a flag
-- support gcs_log_dir
-- support gcs_staging_dir
-- test/cloudbuild.yaml would run the container twice.
-    - with --async (check early return | or check for the build ids that were submitted are running?? Is this needless? Probably.)
-    - without --async (for validation)
-
-
 ## Setup
 
 Manually build this image into your project once. Similar to [`cloud-builders-community`](https://github.com/GoogleCloudPlatform/cloud-builders-community#build-the-build-step-from-source/).
