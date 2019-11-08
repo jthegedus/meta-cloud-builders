@@ -3,13 +3,8 @@
 config_file=""
 workspace_dir="./workspace/builder_repos"
 
-if [ $# -ne 1 ]; then
-    printf "[error] missing path to config file\n"
-    exit 1
-fi
-
 if [ ! -f "$1" ]; then
-    printf "[error] config file %s does NOT exist\n" "$1"
+    printf "[error] first arg should be a config file. File %s does NOT exist\n" "$1"
     exit 1
 fi
 
@@ -39,8 +34,11 @@ jq -r '.[] | .repo' "$config_file" |
         jq -r --arg repository "$url" '.[] | select(.repo == $repository) | .builders | .[]' "$config_file" |
         while read -r builder; do
             printf "\n[info] building %s\n" "$builder"
+            set -x
             gcloud builds submit \
+                "${@:2}" \
                 --config "$workspace_dir/$final_path/$builder/cloudbuild.yaml" \
                 "$workspace_dir/$final_path/$builder"
+            set +x
         done
     done

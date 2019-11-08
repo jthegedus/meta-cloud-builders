@@ -1,20 +1,10 @@
 steps:
   - name: gcr.io/cloud-builders/docker
+    id: "Build: meta builder image"
+    waitFor:
+      - "-"
     dir: ./meta-cloud-builder
     args: ["build", "-t", "gcr.io/$PROJECT_ID/meta-cloud-builder", "."]
-  # sanity check
-  - name: gcr.io/$PROJECT_ID/meta-cloud-builder
-    dir: ./meta-cloud-builder
-    args:
-      - ./test-config.yaml
-  # check if cancelot was built by the test-config.yaml
-  - name: gcr.io/cloud-builders/gcloud
-    dir: ./meta-cloud-builder
-    args:
-      - container
-      - images
-      - list
-      - --filter cancelot
 images:
   - gcr.io/$PROJECT_ID/meta-cloud-builder
 tags: ["cloud-builders-community"]
