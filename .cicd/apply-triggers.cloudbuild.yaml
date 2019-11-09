@@ -1,5 +1,8 @@
 steps:
   - name: gcr.io/cloud-builders/gcloud
+    id: "meta cloud-builder"
+    waitFor:
+      - "-"
     args:
       - beta
       - builds
@@ -7,6 +10,9 @@ steps:
       - import
       - --source=.cicd/triggers/meta-cloud-builder.trigger.yaml
   - name: gcr.io/cloud-builders/gcloud
+    id: "meta trigger"
+    waitFor:
+      - "-"
     args:
       - beta
       - builds
