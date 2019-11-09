@@ -1,0 +1,15 @@
+steps:
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - beta
+      - builds
+      - triggers
+      - import
+      - --source=.cicd/triggers/meta-cloud-builder.trigger.yaml
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - beta
+      - builds
+      - triggers
+      - import
+      - --source=.cicd/triggers/meta-trigger.trigger.yaml
