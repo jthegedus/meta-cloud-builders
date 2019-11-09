@@ -1,10 +1,10 @@
-name: meta-cloud-builder-triggers
+name: meta-cloud-builder-trigger
 description: "Build meta-cloud-builder on change"
 github:
   owner: jthegedus
   name: meta-cloud-builders
   pullRequest:
-    branch: .*
+    branch: .*.*
 filename: meta-cloud-builder/cloudbuild.yaml
 includedFiles:
   - meta-cloud-builder/**
