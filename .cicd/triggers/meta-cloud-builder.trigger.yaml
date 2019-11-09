@@ -1,5 +1,5 @@
-name: meta-cloud-builder-trigger
-description: "Build meta-cloud-builder on changes"
+name: meta-cloud-builder-triggers
+description: "Build meta-cloud-builder on change"
 github:
   owner: jthegedus
   name: meta-cloud-builders
