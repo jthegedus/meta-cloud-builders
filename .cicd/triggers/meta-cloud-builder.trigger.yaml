@@ -3,8 +3,8 @@ description: "Build meta-cloud-builder on change"
 github:
   owner: jthegedus
   name: meta-cloud-builders
-  push:
-    branch: .*.*
+  pullRequest:
+    branch: .*
 filename: meta-cloud-builder/cloudbuild.yaml
 includedFiles:
   - meta-cloud-builder/**
