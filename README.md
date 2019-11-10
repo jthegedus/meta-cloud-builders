@@ -151,6 +151,8 @@ includedFiles:
   - .cicd/**
 ```
 
+For security purposes, I would suggest only running this trigger on pushes to `master` so that changes must be approved before they are applied.
+
 ## Test
 
 - meta-cloud-builder: run from the repo root dir to test:
