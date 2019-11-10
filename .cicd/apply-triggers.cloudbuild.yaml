@@ -8,7 +8,7 @@ steps:
       - builds
       - triggers
       - import
-      - --source=.cicd/triggers/meta-cloud-builder.trigger.yaml
+      - --source=.cicd/triggers/build-meta-cloud-builder.trigger.yaml
   - name: gcr.io/cloud-builders/gcloud
     id: "Apply: meta triggers"
     waitFor:
@@ -28,4 +28,4 @@ steps:
       - builds
       - triggers
       - import
-      - --source=.cicd/triggers/meta-triggers.trigger.yaml
+      - --source=.cicd/triggers/build-meta-triggers.trigger.yaml
