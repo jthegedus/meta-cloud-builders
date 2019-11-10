@@ -2,7 +2,7 @@
 
 - [`meta-cloud-builder`](#meta-cloud-builder): Build custom Cloud Build images (builders) from a config file.
 - [`meta-triggers`](#meta-triggers): Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will automatically get applied.
-- [Test](#test)
+- [Testing](#testing)
 - [License](#license)
 
 ## meta-cloud-builder
@@ -123,7 +123,12 @@ gcloud builds submit --config jthegedus/meta-cloud-builders/meta-triggers/cloudb
 gcloud container images list --filter meta-triggers
 ```
 
-Use the builder by specifying the dir to recursively check and the file suffix to match (I suggest `*.trigger.{json,yaml}`):
+The builder runs by recursively checking a directory for files matching a sufix. The defaults are:
+
+- dir: `.` - the repo root
+- suffix: `.*\.trigger\.(json|yaml)` - a Grep -E regex
+
+You can override the params, but they are positionaly args so to override the `suffix` you must override the `dir`.
 
 ```yaml
 # .cicd/apply-triggers.cloudbuild.yaml
@@ -133,8 +138,8 @@ steps:
     waitFor:
       - "-"
     args:
-      - "--dir=.cicd/"
-      - "--suffix=*.trigger.{json,yaml}"
+      - ".cicd/"
+      - ".*\\.trigger\\.(json|yaml)"
 ```
 
 Now we want to run this Cloud Build Job any time a file in the `--dir` changes. So we setup this trigger once:
@@ -155,7 +160,7 @@ includedFiles:
 
 For security purposes, I would suggest only running this trigger on pushes to `master` so that changes must be approved before they are applied.
 
-## Test
+## Testing
 
 - meta-cloud-builder: run from the repo root dir to test:
 
