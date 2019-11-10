@@ -1,0 +1,10 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: "Build: meta cloud build triggers image"
+    waitFor:
+      - "-"
+    dir: ./meta-triggers
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/meta-triggers", "."]
+images:
+  - gcr.io/$PROJECT_ID/meta-triggers
+tags: ["cloud-builders-community"]
