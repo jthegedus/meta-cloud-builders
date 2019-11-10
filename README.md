@@ -110,7 +110,7 @@ Suggested schedule intervals:
 
 ## meta-triggers
 
-> Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will automatically get applied.
+> Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will get applied.
 
 Manually build this image into your project once.
 
@@ -159,6 +159,8 @@ includedFiles:
 ```
 
 For security purposes, I would suggest only running this trigger on pushes to `master` so that changes must be approved before they are applied.
+
+> NB: this will perform a `gcloub beta builds triggers import --source=""` of Trigger configs that do not change.
 
 ## Testing
 
