@@ -1,13 +1,13 @@
 # Meta Cloud Builders
 
 - [`meta-cloud-builder`](#meta-cloud-builder): Build custom Cloud Build images (builders) from a config file.
-- [`meta-triggers`](#meta-triggers): Watch and deploy all your Cloud Build Triggers on Trigger config changes.
+- [`meta-triggers`](#meta-triggers): Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will automatically get applied.
 - [Test](#test)
 - [License](#license)
 
 ## meta-cloud-builder
 
-> Build custom Cloud Build images (builders) from a config file
+> Build custom Cloud Build images (builders) from a config file.
 
 Manually build this image into your project once.
 
@@ -70,9 +70,11 @@ github:
     branch: master
 filename: .cicd/builders.cloudbuild.yaml
 includedFiles:
-  - .cicd/builders.cloudbuild.yaml      # the build file
+  - .cicd/builders.cloudbuild.yaml      # the Cloud Build job file
   - .cicd/builders/custom-builders.yaml # the config file
 ```
+
+For security purposes, I would suggest only running this trigger on pushes to `master` so that changes must be approved before they are applied.
 
 Import the Trigger:
 
@@ -108,7 +110,7 @@ Suggested schedule intervals:
 
 ## meta-triggers
 
-> Watch and deploy all your Cloud Build Triggers on Trigger config changes.
+> Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will automatically get applied.
 
 Manually build this image into your project once.
 
