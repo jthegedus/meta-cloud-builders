@@ -1,4 +1,4 @@
-name: meta-trigger
+name: run-meta-triggers
 description: "Trigger to apply Triggers on change"
 github:
   owner: jthegedus
