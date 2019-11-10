@@ -1,7 +1,7 @@
 #!/bin/bash
 
 config_file=""
-workspace_dir="./workspace/builder_repos"
+workspace_dir="/workspace/builder_repos"
 
 if [ ! -f "$1" ]; then
     printf "[error] first arg should be a config file. File %s does NOT exist\n" "$1"
