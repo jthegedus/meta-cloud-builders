@@ -79,7 +79,7 @@ printf "\n[info] deleting triggers"
 while read -r line; do
     printf "\n\n%s\n" "$line"
     set -x
-    gcloud beta builds triggers delete --quiet "$line"
+    gcloud beta builds triggers delete --quiet "$line" # TODO: use the FULLY SPECIFIED NAME for the Trigger from the CLI
     # provide the argument [trigger]
     # on the command line with a fully specified name; provide the argument
     # [--project] on the command line; set the property [core/project]. This
