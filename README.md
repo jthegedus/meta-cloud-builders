@@ -4,6 +4,8 @@
 
 - [`meta-cloud-builder`](#meta-cloud-builder): Build custom Cloud Build images (builders) from a config file.
 - [`meta-triggers`](#meta-triggers): Deploy all your Cloud Build Triggers from config files (`yaml` or `json`).
+- [Contributing](#contributing)
+- [Todo](#todo)
 - [Testing](#testing)
 - [License](#license)
 
@@ -168,7 +170,17 @@ For security purposes, I would suggest only running this trigger on pushes to `m
 
 :rotating_light: Trigger `includedFiles` uses [Go Regex with additions](https://cloud.google.com/cloud-build/docs/running-builds/create-manage-triggers#build_trigger), whereas the regex used by meta-triggers is Grep -E Perl regex. Take care.
 
-## Testing
+## Contributing
+
+Contributions of any kind are welcome! Feel free to tackle something from the todo list below.
+
+### Todo
+
+- [ ] meta-triggers: only update triggers that did change by diffing the existing config against the config in files.
+- [ ] meta-triggers: fix the [`run-meta-triggers.trigger.yaml`](.cicd/triggers/run-meta-triggers.trigger.yaml) includedFiles regex to include any file in the repo that matches the `*.trigger.(json|yaml)` regex.
+- general improvements also welcome, though focus on readability.
+
+### Testing
 
 - meta-cloud-builder: run from the repo root dir to test:
 
