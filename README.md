@@ -1,7 +1,9 @@
 # Meta Cloud Builders
 
+> Supercharge your Cloud Building with these custom Builders!
+
 - [`meta-cloud-builder`](#meta-cloud-builder): Build custom Cloud Build images (builders) from a config file.
-- [`meta-triggers`](#meta-triggers): Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will automatically get applied.
+- [`meta-triggers`](#meta-triggers): Deploy all your Cloud Build Triggers from config files (`yaml` or `json`).
 - [Testing](#testing)
 - [License](#license)
 
@@ -110,7 +112,9 @@ Suggested schedule intervals:
 
 ## meta-triggers
 
-> Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will get applied.
+> Deploy all your Cloud Build Triggers from config files (`yaml` or `json`).
+
+Pair this builder with a Trigger and have it run on changes to your Trigger config files.
 
 Manually build this image into your project once.
 
@@ -134,7 +138,7 @@ You can override the params, but they are positionaly args so to override the `s
 # .cicd/apply-triggers.cloudbuild.yaml
 steps:
   - name: gcr.io/$PROJECT_ID/meta-cloud-builder
-    id: "Watch for changes to all Cloud Build Triggers"
+    id: "Watch for changes to all Cloud Build Triggers in provided dir"
     waitFor:
       - "-"
     args:
