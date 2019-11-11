@@ -9,7 +9,7 @@
 
 dir=${1:-"."}
 suffix=${2:-".*\.trigger\.(json|yaml)"}
-workspace="./workspace/meta_triggers_tmp" # TODO: FIX THIS BEFORE TESTING FINAL VERSION!!!!!!!!!!!!!!!!!1
+workspace="/workspace/meta_triggers_tmp"
 
 function has_duplicates() {
   {
@@ -26,18 +26,19 @@ mkdir -p "$workspace"
 printf "[info] dir:\t%s\n" "$dir"
 printf "[info] suffix:\t%s\n" "$suffix"
 
+# read trigger names into a file
 find "$dir" -type f | grep -E "$suffix" > "$workspace/trigger_configs.txt"
 while read -r trigger_file; do
-    # if the file is .json, convert to .yaml
     if [[ "$trigger_file" == *.json ]]; then
-        yq r -j "$trigger_file" > "$workspace/temp.yaml" # write to $workspace dir to keep testing clean
-        trigger_file="$workspace/temp.yaml"
+        # json
+        jq -r '.name' "$trigger_file" >> "$workspace/config_trigger_names.txt"
+    else
+        # yaml
+        yq r "$trigger_file" 'name' >> "$workspace/config_trigger_names.txt"
     fi
-    # extract 'name' field
-    yq r "$trigger_file" 'name' >> "$workspace/config_trigger_names.txt"
 done < "$workspace/trigger_configs.txt"
 
-# error on duplicate filenames
+# error on duplicate trigger names
 if has_duplicates "$workspace/config_trigger_names.txt"; then
     triggers=$(cat "$workspace/config_trigger_names.txt")
     printf "\n[error] You have duplicate _name_ fields across Trigger configs. Names must be unique. Check your Triggers:\n\n%s" "$triggers"
@@ -45,8 +46,8 @@ if has_duplicates "$workspace/config_trigger_names.txt"; then
     exit 1
 fi
 
-gcloud beta builds triggers list > "$workspace/existing_triggers.txt" # TODO: use this file to diff each proposed trigger update with the existing config to actually only update the changed ones
-grep -E "^name:\s.*$" "$workspace/existing_triggers.txt" | sed -e 's/name:\s//g' > "$workspace/existing_trigger_names.txt"
+gcloud beta builds triggers list > "$workspace/existing_triggers.yaml" # TODO: use this file to diff each proposed trigger update with the existing config to actually only update the changed ones
+grep -E "^name:\s.*$" "$workspace/existing_triggers.yaml" | sed -e 's/name:\s//g' > "$workspace/existing_trigger_names.txt"
 
 printf "\n[info] existing triggers\n"
 cat "$workspace/existing_trigger_names.txt"
@@ -67,23 +68,19 @@ printf "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 printf "\n[info] creating & updating triggers"
 while read -r line; do
-    printf "\n\n%s\n" "$line"
     set -x
     gcloud beta builds triggers import --source="$line"
     set +x
-done < "$workspace/trigger_configs.txt" # can use original trigger_config.txt file since there are no duplicates identified and all config files are going to be imported regardless of a CREATE or UPDATE
+done < "$workspace/trigger_configs.txt" # can use original trigger_configs.txt file since there are no duplicates identified and all config files are going to be imported regardless of a CREATE or UPDATE
 
 printf "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
 
 printf "\n[info] deleting triggers"
-while read -r line; do
-    printf "\n\n%s\n" "$line"
+while read -r trigger_name; do
+    yq r -d'*' -j "$workspace/existing_triggers.yaml" > "$workspace/existing_triggers.json"
+    trigger_id=$(jq -r --arg trigger_name "$trigger_name" '.[] | select(.name == $trigger_name) | .id' "$workspace/existing_triggers.json")
     set -x
-    gcloud beta builds triggers delete --quiet "$line" # TODO: use the FULLY SPECIFIED NAME for the Trigger from the CLI
-    # provide the argument [trigger]
-    # on the command line with a fully specified name; provide the argument
-    # [--project] on the command line; set the property [core/project]. This
-    # must be specified.
+    gcloud beta builds triggers delete --quiet "$trigger_id"
     set +x
 done < "$workspace/triggers_to_delete.txt"
 
