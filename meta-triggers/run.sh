@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# find all *.trigger.{json,yaml} files
-    # convert any yaml to json for using jq
-# get the .name field of each file
-# get the .name of all existing triggers
-# diff the existing triggers against the .name in each file and delete
-# import each of the triggers from the file list
+# find all *.trigger.{json,yaml} files in dir
+# diff the existing triggers against the triggers defined in the config file
+# create/update triggers in config files
+# delete triggers in project no longer in config files
 
 dir=${1:-"."}
 suffix=${2:-".*\.trigger\.(json|yaml)"}
