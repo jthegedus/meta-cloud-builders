@@ -1,43 +1,33 @@
 # Meta Cloud Builders
 
-- `meta-cloud-builder`: Build custom cloud build images (builders) from a config file.
-- `meta-cloud-build-triggers`: Watch and deploy Cloud Build Triggers on Trigger (`yaml`) config changes.
+- [`meta-cloud-builder`](#meta-cloud-builder): Build custom Cloud Build images (builders) from a config file.
+- [`meta-triggers`](#meta-triggers): Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will automatically get applied.
+- [Testing](#testing)
+- [License](#license)
 
-# Todo
+## meta-cloud-builder
 
-- [ ] Rewrite readme for multiple builders
+> Build custom Cloud Build images (builders) from a config file.
 
----
-
-This build step invokes `gcloud builds submit ...` for custom cloud-builders specified in a configuration file.
-
-* [Setup](#setup)
-* [Usage](#usage)
-* [Triggers](#triggers)
-* [Schedule](#schedule)
-
-## Setup
-
-Manually build this image into your project once. Similar to [`cloud-builders-community`](https://github.com/GoogleCloudPlatform/cloud-builders-community#build-the-build-step-from-source/).
+Manually build this image into your project once.
 
 ```shell
 # clone
-git clone https://github.com/jthegedus/meta-cloud-builder
+git clone https://github.com/jthegedus/meta-cloud-builders
 # build
-gcloud builds submit --config jthegedus/meta-cloud-builder/cloudbuild.yaml jthegedus/meta-cloud-builder
+gcloud builds submit --config jthegedus/meta-cloud-builders/meta-cloud-builder/cloudbuild.yaml jthegedus/meta-cloud-builders/meta-cloud-builder
 # validate
 gcloud container images list --filter meta-cloud-builder
 ```
 
-## Usage
-
-Create a `.yaml` or `.json` file with key-value-pairs for the repo and cloud-builder you wish to build into your project:
+Create a `.yaml` or `.json` file with repos and the cloud-builder you wish to build into your project:
 
 ```yaml
 # .cicd/builders/custom-builders.yaml
 - repo: https://github.com/jthegedus/meta-cloud-builder
   builders:
     - meta-cloud-builder
+    - meta-triggers
 - repo: https://github.com/GoogleCloudPlatform/cloud-builders-community
   builders:
     - cancelot
@@ -56,16 +46,16 @@ steps:
     args:
       - ".cicd/builders/custom-builders.yaml"
       - "--async"
-      # other gcloud builds submit flags
 tags:
   - cloud-builders
 ```
 
-You can pass any `gcloud builds submit` flags to the builder except the `--config` and `DIR` aspects.
+This builder then invokes `gcloud builds submit ...` for cloud-builders defined in the configuration file. You can pass any `gcloud builds submit` flags to the builder except the `--config` and `SOURCE` aspects. [See the flags here](https://cloud.google.com/sdk/gcloud/reference/builds/submit).
 
-I would recommend passing the `--async` flag to create each builder concurrently.
+<details>
+<summary>Automate building your builders with a Trigger</summary>
 
-## Triggers
+### Triggers
 
 Now with [Cloud Build Triggers being created via `.yaml` config](https://cloud.google.com/blog/products/devops-sre/cloud-build-brings-advanced-cicd-capabilities-to-github) we can run this `builders.cloudbuild.yaml` whenever we make a change to this config file.
 
@@ -74,15 +64,17 @@ Now with [Cloud Build Triggers being created via `.yaml` config](https://cloud.g
 name: cloud-builders
 description: Build custom Cloud Build builders into my gcr project on change
 github:
-  owner: <org/user name>
-  name: <repo name>
-  branch:
+  owner: <org/user_name>
+  name: <repo_name>
+  push:
     branch: master
 filename: .cicd/builders.cloudbuild.yaml
 includedFiles:
-  - .cicd/builders.cloudbuild.yaml      # the build file
+  - .cicd/builders.cloudbuild.yaml      # the Cloud Build job file
   - .cicd/builders/custom-builders.yaml # the config file
 ```
+
+For security purposes, I would suggest only running this trigger on pushes to `master` so that changes must be approved before they are applied.
 
 Import the Trigger:
 
@@ -90,7 +82,7 @@ Import the Trigger:
 gcloud beta builds triggers import --source=.cicd/triggers/builders.trigger.yaml
 ```
 
-## Schedule
+### Schedule
 
 WIP: the message-body might need changing to run a GitHub-based Trigger - see this [Cloud Build Issue](https://issuetracker.google.com/issues/142550612).
 
@@ -114,12 +106,74 @@ Suggested schedule intervals:
 - daily: `0 0 * * *`
 - every sunday: `0 0 * * SUN`
 
-## Test
+</details>
 
-Run this script from the repo root dir to test the meta-cloud-builder:
+## meta-triggers
+
+> Watch and deploy all your Cloud Build Triggers on config changes. If a trigger is updated, removed or created it will get applied.
+
+Manually build this image into your project once.
+
+```shell
+# clone
+git clone https://github.com/jthegedus/meta-cloud-builders
+# build
+gcloud builds submit --config jthegedus/meta-cloud-builders/meta-triggers/cloudbuild.yaml jthegedus/meta-cloud-builders/meta-triggers
+# validate
+gcloud container images list --filter meta-triggers
+```
+
+The builder runs by recursively checking a directory for files matching a sufix. The defaults are:
+
+- dir: `.` - the repo root
+- suffix: `.*\.trigger\.(json|yaml)` - a Grep -E regex
+
+You can override the params, but they are positionaly args so to override the `suffix` you must override the `dir`.
+
+```yaml
+# .cicd/apply-triggers.cloudbuild.yaml
+steps:
+  - name: gcr.io/$PROJECT_ID/meta-cloud-builder
+    id: "Watch for changes to all Cloud Build Triggers"
+    waitFor:
+      - "-"
+    args:
+      - ".cicd/"
+      - ".*\\.trigger\\.(json|yaml)"
+```
+
+Now we want to run this Cloud Build Job any time a file in the `--dir` changes. So we setup this trigger once:
+
+```yaml
+# .cicd/triggers/meta-trigger.trigger.yaml
+name: meta-trigger
+description: "Trigger to apply Triggers on change"
+github:
+  owner: <org/user_name>
+  name: <repo_name>
+  push:
+    branch: master
+filename: .cicd/apply-triggers.cloudbuild.yaml
+includedFiles:
+  - .cicd/**
+```
+
+For security purposes, I would suggest only running this trigger on pushes to `master` so that changes must be approved before they are applied.
+
+> NB: this will perform a `gcloub beta builds triggers import --source=""` of Trigger configs that do not change.
+
+## Testing
+
+- meta-cloud-builder: run from the repo root dir to test:
 
 ```shell
 gcloud builds submit ./meta-cloud-builder/test/ --config=./meta-cloud-builder/test/cloudbuild.yaml
+```
+
+- meta-triggers: run from the repo root dir to test:
+
+```shell
+gcloud builds submit ./meta-triggers/test/ --config=./meta-triggers/test/cloudbuild.yaml
 ```
 
 ## License

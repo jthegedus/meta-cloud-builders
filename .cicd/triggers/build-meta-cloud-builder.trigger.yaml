@@ -1,0 +1,10 @@
+name: build-meta-cloud-builder
+description: "Build meta-cloud-builder on change"
+github:
+  owner: jthegedus
+  name: meta-cloud-builders
+  pullRequest:
+    branch: .*
+filename: meta-cloud-builder/cloudbuild.yaml
+includedFiles:
+  - meta-cloud-builder/**
