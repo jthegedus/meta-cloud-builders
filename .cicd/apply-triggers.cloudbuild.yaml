@@ -1,31 +1,7 @@
 steps:
-  - name: gcr.io/cloud-builders/gcloud
-    id: "Build: meta cloud-builder"
+  - name: gcr.io/$PROJECT_ID/meta-triggers
+    id: "Apply Cloud Build Trigger configs from repo"
     waitFor:
       - "-"
     args:
-      - beta
-      - builds
-      - triggers
-      - import
-      - --source=.cicd/triggers/build-meta-cloud-builder.trigger.yaml
-  - name: gcr.io/cloud-builders/gcloud
-    id: "Apply: meta triggers"
-    waitFor:
-      - "-"
-    args:
-      - beta
-      - builds
-      - triggers
-      - import
-      - --source=.cicd/triggers/meta-trigger.trigger.yaml
-  - name: gcr.io/cloud-builders/gcloud
-    id: "Build: meta triggers builder"
-    waitFor:
-      - "-"
-    args:
-      - beta
-      - builds
-      - triggers
-      - import
-      - --source=.cicd/triggers/build-meta-triggers.trigger.yaml
+      - .cicd
