@@ -1,0 +1,11 @@
+name: build-cloud-builders
+description: Build custom Cloud Build builders into my gcr project on meta-builder config changes
+github:
+  owner: jthegedus
+  name: meta-cloud-builders
+  push:
+    branch: master
+filename: .cicd/build-custom-builders.cloudbuild.yaml
+includedFiles:
+  - .cicd/build-custom-builders.cloudbuild.yaml # the Cloud Build job file
+  - .cicd/builders/custom-builders.yaml # the config file
