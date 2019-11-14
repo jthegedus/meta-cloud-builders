@@ -4,7 +4,7 @@ github:
   owner: jthegedus
   name: meta-cloud-builders
   pullRequest:
-    branch: .*.*
+    branch: .*
 filename: meta-triggers/cloudbuild.yaml
 includedFiles:
   - meta-triggers/**
