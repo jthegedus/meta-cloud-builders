@@ -5,3 +5,4 @@ steps:
       - "-"
     args:
       - .cicd
+tags: ["meta-triggers"]
