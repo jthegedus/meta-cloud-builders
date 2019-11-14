@@ -1,0 +1,3 @@
+- repo: https://github.com/GoogleCloudPlatform/cloud-builders-community
+  builders:
+    - cancelot
