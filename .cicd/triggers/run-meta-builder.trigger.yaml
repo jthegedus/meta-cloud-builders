@@ -1,5 +1,5 @@
 name: build-cloud-builders
-description: Build custom Cloud Build builders into my gcr project on meta-builder config changes
+description: "Build custom Cloud Build builders into my gcr project on meta-builder config changes"
 github:
   owner: jthegedus
   name: meta-cloud-builders
