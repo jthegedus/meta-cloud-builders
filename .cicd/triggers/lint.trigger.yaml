@@ -1,0 +1,8 @@
+name: lint-on-pr
+description: "Lint all code on PRs"
+github:
+  owner: jthegedus
+  name: meta-cloud-builders
+  pullRequest:
+    branch: .*
+filename: .cicd/lint.cloudbuild.yaml
