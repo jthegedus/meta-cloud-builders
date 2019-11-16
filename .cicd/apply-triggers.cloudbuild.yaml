@@ -1,8 +1,16 @@
 steps:
+  - name: gcr.io/$PROJECT_ID/cancelot
+    id: "Cancelot"
+    args:
+      - "--current_build_id"
+      - "$BUILD_ID"
+      - "--branch_name"
+      - "$BRANCH_NAME"
+      - "--same_trigger_only"
   - name: gcr.io/$PROJECT_ID/meta-triggers
     id: "Apply Cloud Build Trigger configs from repo"
     waitFor:
-      - "-"
+      - "Cancelot"
     args:
-      - .cicd
+      - ".cicd"
 tags: ["meta-triggers"]
