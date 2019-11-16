@@ -1,10 +1,18 @@
 steps:
+  - name: gcr.io/$PROJECT_ID/cancelot
+    id: "Cancelot"
+    args:
+      - "--current_build_id"
+      - "$BUILD_ID"
+      - "--branch_name"
+      - "$BRANCH_NAME"
+      - "--same_trigger_only"
   - name: gcr.io/$PROJECT_ID/meta-cloud-builder
     id: "Build: custom images asynchronously"
     waitFor:
       - "-"
     args:
-      - .cicd/builders/custom-builders.yaml
-      - --timeout=900
-      - --async
+      - ".cicd/builders/custom-builders.yaml"
+      - "--timeout=900"
+      - "--async"
 tags: ["cloud-builders"]

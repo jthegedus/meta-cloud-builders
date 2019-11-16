@@ -168,7 +168,7 @@ For security purposes, I would suggest only running this trigger on pushes to `m
 
 > NB: this will perform a `gcloub beta builds triggers import --source=""` of Trigger configs that do not change.
 
-:rotating_light: Trigger `includedFiles` uses [Go Regex with additions](https://cloud.google.com/cloud-build/docs/running-builds/create-manage-triggers#build_trigger), whereas the regex used by meta-triggers is Grep -E Perl regex. Take care.
+🚨 Trigger `includedFiles` uses [Go Regex with additions](https://cloud.google.com/cloud-build/docs/running-builds/create-manage-triggers#build_trigger), whereas the regex used by meta-triggers is Grep -E Perl regex. Take care.
 
 ## Contributing
 
