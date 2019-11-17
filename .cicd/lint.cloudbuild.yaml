@@ -11,6 +11,11 @@ steps:
     id: "Shellcheck"
     waitFor:
       - "Cancelot"
+    entrypoint: "bash"
     args:
-      - ./**/*.sh
+      - "c"
+      - |
+        ls -la \
+        && ls -la meta-cloud-builder \
+        && shellcheck ./**/*.sh
 tags: ["lint"]
