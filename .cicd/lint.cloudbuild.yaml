@@ -1,6 +1,7 @@
 steps:
   - name: gcr.io/$PROJECT_ID/cancelot
     id: "Cancelot"
+    waitFor: ["-"]
     args:
       - "--current_build_id"
       - "$BUILD_ID"
@@ -8,14 +9,8 @@ steps:
       - "$BRANCH_NAME"
       - "--same_trigger_only"
   - name: gcr.io/$PROJECT_ID/shellcheck
-    id: "Shellcheck"
-    waitFor:
-      - "Cancelot"
-    args: ["./**/*.sh"]
-    # entrypoint: "bash"
-    # - "-c"
-    # - |
-    #   ls -la \
-    #   && ls -la meta-cloud-builder \
-    #   && shellcheck ./**/*.sh
+    id: "Lint: Shellcheck"
+    waitFor: ["Cancelot"]
+    entrypoint: "bash"
+    args: ["-c", "./**/*.sh"]
 tags: ["lint"]
