@@ -21,7 +21,7 @@ if [[ "$config_file" != *.json ]]; then
     exit 1
 fi
 
-printf "[info] loading from config file: %s\n" $config_file
+printf "[info] loading from config file: %s\n" "$config_file"
 
 # for each repo, clone to workspace
 jq -r '.[] | .repo' "$config_file" | 
