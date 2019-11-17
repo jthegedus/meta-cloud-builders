@@ -11,9 +11,7 @@ steps:
   - name: gcr.io/$PROJECT_ID/shellcheck
     id: "Lint: Shellcheck"
     waitFor: ["Cancelot"]
-    entrypoint: "bash"
     args:
-      - "-c"
-      - |
-        "shellcheck ./**/*.sh"
+      - ./meta-cloud-builder/run.sh
+      - ./meta-triggers/run.sh
 tags: ["lint"]
