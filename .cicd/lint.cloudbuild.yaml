@@ -12,5 +12,8 @@ steps:
     id: "Lint: Shellcheck"
     waitFor: ["Cancelot"]
     entrypoint: "bash"
-    args: ["-c", "shellcheck ./**/*.sh"]
+    args:
+      - "-c"
+      - |
+        shellcheck ./**/*.sh
 tags: ["lint"]
