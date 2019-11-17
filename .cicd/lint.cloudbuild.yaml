@@ -12,5 +12,5 @@ steps:
     waitFor:
       - "Cancelot"
     args:
-      - "**/*.sh"
+      - ./**/*.sh
 tags: ["lint"]
