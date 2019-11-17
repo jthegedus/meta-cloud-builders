@@ -12,5 +12,5 @@ steps:
     waitFor:
       - "Cancelot"
     args:
-      - ".cicd"
+      - .cicd
 tags: ["meta-triggers"]
