@@ -13,7 +13,7 @@ steps:
       - "Cancelot"
     entrypoint: "bash"
     args:
-      - "c"
+      - "-c"
       - |
         ls -la \
         && ls -la meta-cloud-builder \
