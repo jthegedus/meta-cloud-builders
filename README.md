@@ -19,7 +19,7 @@ Manually build this image into your project once.
 # clone
 git clone https://github.com/jthegedus/meta-cloud-builders
 # build
-gcloud builds submit --config jthegedus/meta-cloud-builders/meta-cloud-builder/cloudbuild.yaml jthegedus/meta-cloud-builders/meta-cloud-builder
+gcloud builds submit --config meta-cloud-builders/meta-cloud-builder/cloudbuild.yaml meta-cloud-builders/meta-cloud-builder
 # validate
 gcloud container images list --filter meta-cloud-builder
 ```
@@ -124,7 +124,7 @@ Manually build this image into your project once.
 # clone
 git clone https://github.com/jthegedus/meta-cloud-builders
 # build
-gcloud builds submit --config jthegedus/meta-cloud-builders/meta-triggers/cloudbuild.yaml jthegedus/meta-cloud-builders/meta-triggers
+gcloud builds submit --config meta-cloud-builders/meta-triggers/cloudbuild.yaml meta-cloud-builders/meta-triggers
 # validate
 gcloud container images list --filter meta-triggers
 ```
