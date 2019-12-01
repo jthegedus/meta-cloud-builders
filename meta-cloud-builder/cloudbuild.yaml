@@ -3,7 +3,6 @@ steps:
     id: "Build: meta builder image"
     waitFor:
       - "-"
-    dir: ./meta-cloud-builder
     args: ["build", "-t", "gcr.io/$PROJECT_ID/meta-cloud-builder", "."]
 images:
   - gcr.io/$PROJECT_ID/meta-cloud-builder
