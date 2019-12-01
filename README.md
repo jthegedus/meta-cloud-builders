@@ -141,7 +141,7 @@ You can override the params, but they are positionaly args so to override the `s
 ```yaml
 # .cicd/apply-triggers.cloudbuild.yaml
 steps:
-  - name: gcr.io/$PROJECT_ID/meta-cloud-builder
+  - name: gcr.io/$PROJECT_ID/meta-triggers
     id: "Watch for changes to all Cloud Build Triggers in provided dir"
     waitFor:
       - "-"
