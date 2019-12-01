@@ -13,13 +13,14 @@
 
 > Build custom Cloud Build images (builders) from a config file.
 
-Manually build this image into your project once.
+Manually build this image into your project once (I suggest Cloud Shell).
 
 ```shell
 # clone
 git clone https://github.com/jthegedus/meta-cloud-builders
 # build
-gcloud builds submit --config meta-cloud-builders/meta-cloud-builder/cloudbuild.yaml meta-cloud-builders/meta-cloud-builder
+cd meta-cloud-builders/meta-cloud-builder
+gcloud builds submit .
 # validate
 gcloud container images list --filter meta-cloud-builder
 ```
@@ -124,7 +125,8 @@ Manually build this image into your project once.
 # clone
 git clone https://github.com/jthegedus/meta-cloud-builders
 # build
-gcloud builds submit --config meta-cloud-builders/meta-triggers/cloudbuild.yaml meta-cloud-builders/meta-triggers
+cd meta-cloud-builders/meta-triggers
+gcloud builds submit .
 # validate
 gcloud container images list --filter meta-triggers
 ```
