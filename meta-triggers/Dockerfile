@@ -1,12 +1,15 @@
-FROM gcr.io/cloud-builders/gcloud
+# hadolint ignore=DL3007
+FROM gcr.io/cloud-builders/gcloud:latest
 
 RUN apt-get -qq -y update \
-	&& apt-get -qq -y install jq
+	&& apt-get -qq -y --no-install-recommends install jq=1.6 \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
-ADD yq /usr/bin
+COPY yq /usr/bin
 RUN chmod +x /usr/bin/yq
 
-ADD run.sh /usr/bin
+COPY run.sh /usr/bin
 RUN chmod +x /usr/bin/run.sh
 
 ENTRYPOINT [ "/usr/bin/run.sh" ]
