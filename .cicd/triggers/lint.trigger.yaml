@@ -5,4 +5,4 @@ github:
   name: meta-cloud-builders
   pullRequest:
     branch: .*
-filename: .cicd/lint.cloudbuild.yaml
+filename: .cicd/jobs/lint.cloudbuild.yaml

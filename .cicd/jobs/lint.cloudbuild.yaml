@@ -1,16 +1,21 @@
+tags:
+  - "lint"
+
 steps:
   - name: gcr.io/$PROJECT_ID/cancelot
     id: "Cancelot"
+    waitFor:
+      - "-"
     args:
       - "--current_build_id"
       - "$BUILD_ID"
       - "--branch_name"
       - "$BRANCH_NAME"
       - "--same_trigger_only"
-  - name: gcr.io/$PROJECT_ID/meta-triggers
-    id: "Apply Cloud Build Trigger configs from repo"
+  - name: gcr.io/$PROJECT_ID/shellcheck
+    id: "Lint: Shellcheck"
     waitFor:
       - "Cancelot"
     args:
-      - .cicd
-tags: ["meta-triggers"]
+      - ./meta-cloud-builder/run.sh
+      - ./meta-triggers/run.sh
