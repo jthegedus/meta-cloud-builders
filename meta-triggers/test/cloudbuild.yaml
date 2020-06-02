@@ -1,3 +1,7 @@
+tags:
+  - "cloud-builders-community"
+  - "test"
+
 steps:
   # sanity check
   - name: gcr.io/$PROJECT_ID/meta-triggers
@@ -6,4 +10,3 @@ steps:
       - "-"
     args:
       - "meta-triggers/test"
-tags: ["cloud-builders-community", "test"]

@@ -1,12 +1,12 @@
 {
-    "name": "test-trigger",
-    "description": "test trigger for meta-triggers builder",
-    "github": {
-        "owner": "jthegedus",
-        "name": "meta-cloud-builders",
-        "push": {
-            "branch": "master"
-        }
-    },
-    "filename": "meta-triggers/test/cloudbuild.yaml"
+	"name": "test-trigger",
+	"description": "test trigger for meta-triggers builder",
+	"github": {
+		"owner": "jthegedus",
+		"name": "meta-cloud-builders",
+		"push": {
+			"branch": "master"
+		}
+	},
+	"filename": "meta-triggers/test/cloudbuild.yaml"
 }
