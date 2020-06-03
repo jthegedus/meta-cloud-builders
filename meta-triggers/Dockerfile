@@ -1,14 +1,13 @@
 # hadolint ignore=DL3007
 FROM gcr.io/cloud-builders/gcloud:latest
 
-ENV JQ_VERION="1.5"
+ENV JQ_VERION="1.5+dfsg-1ubuntu0.1"
 ENV YQ_VERSION="3.3.0"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # setup jq
 RUN apt-get -qq -y update \
-	&& apt-cache showpkg jq \
 	&& apt-get -qq -y --no-install-recommends install "jq=${JQ_VERION}" \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
