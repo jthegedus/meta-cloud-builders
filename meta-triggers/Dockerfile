@@ -1,8 +1,8 @@
 # hadolint ignore=DL3007
 FROM gcr.io/cloud-builders/gcloud:latest
 
-ENV JQ_VERION=1.6
-ENV YQ_VERSION=3.3.0
+ENV JQ_VERION="1.6-1"
+ENV YQ_VERSION="3.3.0"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
