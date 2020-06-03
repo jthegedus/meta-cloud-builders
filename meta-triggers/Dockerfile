@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # setup jq
 RUN apt-get -qq -y update \
-	&& apt-get -qq -y --no-install-recommends install jq=${JQ_VERION} \
+	&& apt-get -qq -y --no-install-recommends install "jq=${JQ_VERION}" \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
