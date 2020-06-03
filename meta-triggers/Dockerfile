@@ -6,10 +6,9 @@ ENV YQ_VERSION="3.3.0"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN echo "$(apt-cache showpkg jq)"
-
 # setup jq
 RUN apt-get -qq -y update \
+	&& apt-cache showpkg jq \
 	&& apt-get -qq -y --no-install-recommends install "jq=${JQ_VERION}" \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
