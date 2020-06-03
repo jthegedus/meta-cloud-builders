@@ -3,13 +3,13 @@ FROM gcr.io/cloud-builders/gcloud:latest
 
 ENV JQ_VERION="1.5+dfsg-1ubuntu0.1"
 ENV YQ_VERSION="3.3.0"
+ENV WGET_VERSION="1.17.1-1ubuntu1.5"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # setup jq
 RUN apt-get -qq -y update \
-	&& apt-cache showpkg wget \ 
-	&& apt-get -qq -y --no-install-recommends install "jq=${JQ_VERION}" wget \
+	&& apt-get -qq -y --no-install-recommends install "jq=${JQ_VERION}" "wget=${WGET_VERSION}" \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
