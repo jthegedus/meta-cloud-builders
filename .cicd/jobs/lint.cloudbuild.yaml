@@ -12,6 +12,7 @@ steps:
       - "--branch_name"
       - "$BRANCH_NAME"
       - "--same_trigger_only"
+
   - name: gcr.io/$PROJECT_ID/shellcheck
     id: "Lint: Shellcheck"
     waitFor:
@@ -19,3 +20,11 @@ steps:
     args:
       - ./meta-cloud-builder/run.sh
       - ./meta-triggers/run.sh
+
+  - name: mvdan/shfmt:latest-alpine
+    id: "Lint: shell format"
+    waitFor:
+      - "Cancelot"
+    args:
+      - "-d"
+      - "."
