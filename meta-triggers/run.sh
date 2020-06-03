@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # find all *.trigger.{json,yaml} files in dir
 # diff the existing triggers against the triggers defined in the config file
@@ -10,9 +10,9 @@ suffix=${2:-".*\.trigger\.(json|yaml)"}
 tmp_workspace="/workspace/meta_triggers_tmp"
 
 function has_duplicates() {
-	{
-		sort | uniq -d | grep . -qc
-	} <"$1"
+{
+sort | uniq -d | grep . -qc
+} <"$1"
 }
 
 function cleanup() {
