@@ -10,6 +10,6 @@ steps:
       - "build"
       - "-t"
       - "gcr.io/$PROJECT_ID/meta-triggers"
-      - "."
+      - "meta-triggers"
 images:
   - gcr.io/$PROJECT_ID/meta-triggers
