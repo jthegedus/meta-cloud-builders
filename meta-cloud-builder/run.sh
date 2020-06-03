@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 config_file=""
 workspace_dir="/workspace/builder_repos"
