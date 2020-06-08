@@ -11,7 +11,7 @@ IFS=$'\n\t'
 ${TARGET_PROJECT_ID:?"TARGET_PROJECT_ID is required and should be set to $PROJECT_ID in Cloud Build. Pass it to the builder via the env: list. See env usage here: https://cloud.google.com/cloud-build/docs/build-config#build_steps"}
 dir=${TRIGGERS_DIRECTORY:-"."}
 suffix=${TRIGGERS_SUFFIX:-".*\.trigger\.(json|yaml|yml)"}
-testing=${DEVELOPMENT_TESTING:-"false"}
+development_testing=${DEVELOPMENT_TESTING:-"false"}
 
 function log_info() {
 	printf "[info]\\t%s\\n" "${@}"
@@ -29,7 +29,8 @@ function log_error() {
 function array_has_duplicates() {
 	{
 		# grep is used to return 0 if uniq -d returns a list of values. Credit https://stackoverflow.com/a/22499126/7911479
-		printf "%s\n" "$1[@]" | uniq -d | grep . -qc
+		local arr=("$@")
+		printf "%s\n" "${arr[@]}" | uniq -d | grep . -qc
 	}
 }
 
@@ -82,7 +83,7 @@ function main() {
 	done
 
 	# error on duplicate trigger names
-	if array_has_duplicates "$trigger_names_project_match"; then
+	if array_has_duplicates "${trigger_names_project_match[@]}"; then
 		log_error "You have duplicate _name_ fields across Trigger configs. Names must be unique. Check your Triggers:"
 		log_error "${trigger_names_project_match[@]}"
 		cleanup
@@ -116,7 +117,7 @@ function main() {
 	log_info "Triggers to DELETE"
 	log_info "${delete_trigger_names[@]}"
 
-	if [[ "$DEVELOPMENT_TESTING" == "true" ]]; then
+	if [[ "$development_testing" == "true" ]]; then
 		log_info "In development mode. Triggers will not be Upserted or Deleted."
 		exit 0
 	fi
