@@ -99,14 +99,15 @@ function main() {
 	# ! in source & in existing
 	delete_trigger_names+=($(comm -13 <(printf "%s\n" "${trigger_names_project_match[@]}" | sort) <(printf "%s\n" "${existing_trigger_names[@]}" | sort)))
 
-	log_info "Existing Triggers:"
-	log_info "${existing_trigger_names[@]}"
-
-	log_info "Triggers in source code:"
+	log_info "-----Triggers in source code-----"
+	log_info "Triggers INCLUDED because of project match"
 	log_info "${trigger_names_project_match[@]}"
 
 	log_info "Triggers IGNORED because of project mismatch"
 	log_info "${trigger_names_project_mismatch[@]}"
+
+	log_info "-----Existing Triggers in project-----"
+	log_info "${existing_trigger_names[@]}"
 
 	log_info "Triggres to CREATE"
 	log_info "${create_trigger_names[@]}"
