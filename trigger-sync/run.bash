@@ -8,7 +8,7 @@ IFS=$'\n\t'
 # diff the existing triggers against the triggers defined in the config file
 # upsert triggers from config files
 # delete triggers in project no longer in config files
-${TARGET_PROJECT_ID:?"TARGET_PROJECT_ID is required and should be set to $PROJECT_ID in Cloud Build. Pass it to the builder via the env: list. See env usage here: https://cloud.google.com/cloud-build/docs/build-config#build_steps"}
+: "${TARGET_PROJECT_ID:?Env var TARGET_PROJECT_ID is required and should be set to $PROJECT_ID in Cloud Build. Pass it to the builder via the env: list. See env usage here: https://cloud.google.com/cloud-build/docs/build-config#build_steps}"
 dir=${TRIGGERS_DIRECTORY:-"."}
 suffix=${TRIGGERS_SUFFIX:-".*\.trigger\.(json|yaml|yml)"}
 development_testing=${DEVELOPMENT_TESTING:-"false"}
