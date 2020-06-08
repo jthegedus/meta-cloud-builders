@@ -18,7 +18,7 @@ RUN wget -qO- "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/y
 RUN chmod +x /usr/bin/yq
 
 # setup entrypoint script
-COPY run.sh /usr/bin
-RUN chmod +x /usr/bin/run.sh
+COPY run.bash /usr/bin
+RUN chmod +x /usr/bin/run.bash
 
-ENTRYPOINT [ "/usr/bin/run.sh" ]
+ENTRYPOINT [ "/usr/bin/run.bash" ]

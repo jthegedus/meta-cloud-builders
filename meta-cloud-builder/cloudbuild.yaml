@@ -1,5 +1,6 @@
 tags:
   - "cloud-builders-community"
+  - "meta-cloud-builder"
 
 steps:
   - name: gcr.io/cloud-builders/docker
@@ -11,5 +12,6 @@ steps:
       - "-t"
       - "gcr.io/$PROJECT_ID/meta-cloud-builder"
       - "meta-cloud-builder"
+
 images:
   - gcr.io/$PROJECT_ID/meta-cloud-builder
