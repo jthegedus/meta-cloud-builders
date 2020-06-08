@@ -14,7 +14,7 @@ steps:
       - "trigger-sync"
   # sanity check
   - name: gcr.io/$PROJECT_ID/trigger-sync
-    id: "Test: trigger-sync cloud-builder executes as expected"
+    id: "Test: cloud-builder executes with trigger-sync/test triggers"
     waitFor:
       - "Build: trigger-sync image"
     env:
@@ -22,7 +22,7 @@ steps:
       - "TRIGGERS_DIRECTORY=trigger-sync/test"
       - "DEVELOPMENT_TESTING=true"
   - name: gcr.io/$PROJECT_ID/trigger-sync
-    id: "Test: trigger-sync cloud-builder executes as expected"
+    id: "Test: cloud-builder executes with .cicd/ triggers"
     waitFor:
       - "Build: trigger-sync image"
     env:
