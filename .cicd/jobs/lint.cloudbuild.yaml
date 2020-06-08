@@ -18,8 +18,8 @@ steps:
     waitFor:
       - "Cancelot"
     args:
-      - ./meta-cloud-builder/run.sh
-      - ./trigger-sync/run.sh
+      - ./meta-cloud-builder/run.bash
+      - ./trigger-sync/run.bash
 
   - name: mvdan/shfmt:latest-alpine
     id: "Lint: shell format"
