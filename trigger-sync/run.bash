@@ -99,27 +99,34 @@ function main() {
 	# ! in source & in existing
 	delete_trigger_names+=($(comm -13 <(printf "%s\n" "${trigger_names_project_match[@]}" | sort) <(printf "%s\n" "${existing_trigger_names[@]}" | sort)))
 
-	log_info "\\nExisting Triggers:\\n"
-	log_info "${existing_trigger_names[@]}"
-
-	log_info "\\nTriggers in source code:\\n"
-	log_info "${trigger_names_project_match[@]}"
-
-	log_info "\\nTriggers IGNORED because of project mismatch\\n"
-	log_info "${trigger_names_project_mismatch[@]}"
-
-	log_info "\\nTriggres to CREATE\\n"
-	log_info "${create_trigger_names[@]}"
-
-	log_info "\\nTriggers to UPDATE\\n"
-	log_info ${update_trigger_names+"${update_trigger_names[@]}"}
+	# TODO: ignore this shellcheck error - SC2086
 	# Credit for unbound error of empty array expansion - https://stackoverflow.com/a/61551944/7911479
+	log_info "\nExisting Triggers:\n"
+	log_info ${existing_trigger_names+"${existing_trigger_names[@]}"}
 
-	log_info "\\nTriggers to DELETE\\n"
-	log_info "${delete_trigger_names[@]}"
+	log_info "\nTriggers in source code:\n"
+	log_info ${trigger_names_project_match+"${trigger_names_project_match[@]}"}
+
+	log_info "\nTriggers IGNORED because of project mismatch\n"
+	log_info ${trigger_names_project_mismatch+"${trigger_names_project_mismatch[@]}"}
+
+	log_info "\nTriggres to CREATE\n"
+	log_info ${create_trigger_names+"${create_trigger_names[@]}"}
+
+	log_info "\nTriggers to UPDATE\n"
+	log_info ${update_trigger_names+"${update_trigger_names[@]}"}
+
+	log_info "\nTriggers to DELETE\n"
+	log_info ${delete_trigger_names+"${delete_trigger_names[@]}"}
 
 	if [[ "$development_testing" == "true" ]]; then
 		log_info "In development mode. Triggers will not be Upserted or Deleted."
+		for trigger_file in "${trigger_files_project_match[@]}"; do
+			log_info "Trigger to update: $trigger_file"
+		done
+		for trigger_name in "${delete_trigger_names[@]}"; do
+			log_info "Trigger to delete: $trigger_name"
+		done
 		exit 0
 	fi
 
@@ -132,9 +139,9 @@ function main() {
 	done
 
 	log_info "Deleting Triggers"
-	for trigger in "${delete_trigger_names[@]}"; do
+	for trigger_name in "${delete_trigger_names[@]}"; do
 		set -x
-		gcloud beta builds triggers delete --quiet "${trigger}"
+		gcloud beta builds triggers delete --quiet "${trigger_name}"
 		set +x
 	done
 	log_info "Finished syncing Cloud Build Triggers into project $TARGET_PROJECT_ID"
