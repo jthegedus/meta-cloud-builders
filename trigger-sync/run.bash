@@ -100,22 +100,22 @@ function main() {
 	delete_trigger_names+=($(comm -13 <(printf "%s\n" "${trigger_names_project_match[@]}" | sort) <(printf "%s\n" "${existing_trigger_names[@]}" | sort)))
 
 	log_info "Existing Triggers:"
-	log_info "${existing_trigger_names[@]}"
+	log_info "\t${existing_trigger_names[@]}"
 
 	log_info "Triggers in source code:"
-	log_info "${trigger_names_project_match[@]}"
+	log_info "\t${trigger_names_project_match[@]}"
 
 	log_info "Triggers IGNORED because of project mismatch"
-	log_info "${trigger_names_project_mismatch[@]}"
+	log_info "\t${trigger_names_project_mismatch[@]}"
 
 	log_info "Triggres to CREATE"
-	log_info "${create_trigger_names[@]}"
+	log_info "\t${create_trigger_names[@]}"
 
 	log_info "Triggers to UPDATE"
-	log_info "${update_trigger_names[@]}"
+	log_info "\t${update_trigger_names[@]}"
 
 	log_info "Triggers to DELETE"
-	log_info "${delete_trigger_names[@]}"
+	log_info "\t${delete_trigger_names[@]}"
 
 	if [[ "$development_testing" == "true" ]]; then
 		log_info "In development mode. Triggers will not be Upserted or Deleted."
