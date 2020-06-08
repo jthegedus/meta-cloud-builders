@@ -12,6 +12,15 @@ steps:
       - "-t"
       - "gcr.io/$PROJECT_ID/trigger-sync"
       - "trigger-sync"
+  # sanity check
+  - name: gcr.io/$PROJECT_ID/trigger-sync
+    id: "Test: trigger-sync cloud-builder executes as expected"
+    waitFor:
+      - "Build: trigger-sync image"
+    env:
+      - "TARGET_PROJECT_ID=$PROJECT_ID"
+      - "TRIGGERS_DIRECTORY=trigger-sync/test"
+      - "DEVELOPMENT_TESTING=true"
 
 images:
   - gcr.io/$PROJECT_ID/trigger-sync
