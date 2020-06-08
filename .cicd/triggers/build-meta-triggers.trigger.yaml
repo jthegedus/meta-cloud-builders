@@ -5,6 +5,6 @@ github:
   name: meta-cloud-builders
   pullRequest:
     branch: .*
-filename: meta-triggers/cloudbuild.yaml
+filename: trigger-sync/cloudbuild.yaml
 includedFiles:
   - meta-triggers/**
