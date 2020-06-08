@@ -1,0 +1,10 @@
+name: test-match
+description: test trigger for trigger-sync builder. Matches project_id
+github:
+  owner: jthegedus
+  name: meta-cloud-builders
+  push:
+    branch: master
+filename: trigger-sync/test/cloudbuild.yaml
+projects:
+  - open-source-257909

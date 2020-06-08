@@ -1,0 +1,14 @@
+tags:
+  - "trigger-sync"
+  - "test"
+
+steps:
+  # sanity check
+  - name: gcr.io/$PROJECT_ID/trigger-sync
+    id: "Test: trigger-sync cloud-builder runs"
+    waitFor:
+      - "-"
+    env:
+      - "TARGET_PROJECT_ID=$PROJECT_ID"
+      - "TRIGGERS_DIRECTORY=trigger-sync/test"
+      - "DEVELOPMENT_TESTING=true"
