@@ -19,7 +19,7 @@ steps:
       - "Cancelot"
     args:
       - ./meta-cloud-builder/run.sh
-      - ./meta-triggers/run.sh
+      - ./trigger-sync/run.sh
 
   - name: mvdan/shfmt:latest-alpine
     id: "Lint: shell format"
