@@ -1,5 +1,5 @@
-name: build-meta-triggers
-description: "Build meta-trigges builder on change"
+name: build-trigger-sync
+description: "Build trigger-sync builder on change"
 github:
   owner: jthegedus
   name: meta-cloud-builders
@@ -7,4 +7,4 @@ github:
     branch: .*
 filename: trigger-sync/cloudbuild.yaml
 includedFiles:
-  - meta-triggers/**
+  - trigger-sync/**
