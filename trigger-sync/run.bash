@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -euo pipefail
 IFS=$'\n\t'
 
 # find all *.trigger.{json,yaml} files in dir
@@ -47,9 +47,9 @@ function trigger_targets_current_project() {
 }
 
 function main() {
-	log_info "dir:\\t$dir"
-	log_info "suffix:\\t$suffix"
-	log_info "target project:\\t$TARGET_PROJECT_ID"
+	log_info "dir: $dir"
+	log_info "suffix: $suffix"
+	log_info "target project: $TARGET_PROJECT_ID"
 
 	# read trigger names from source code
 	local trigger_files_all=()
