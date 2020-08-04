@@ -75,7 +75,7 @@ github:
     branch: master
 filename: .cicd/builders.cloudbuild.yaml
 includedFiles:
-  - .cicd/builders.cloudbuild.yaml      # the Cloud Build job file
+  - .cicd/builders.cloudbuild.yaml # the Cloud Build job file
   - .cicd/builders/custom-builders.yaml # the config file
 ```
 
@@ -108,6 +108,7 @@ gcloud scheduler jobs create http \
 Just fill in `PROJECTID`, `TRIGGERID` and create a Service Account and fill in the `EMAIL_ADDRESS` accordingly.
 
 Suggested schedule intervals:
+
 - daily: `0 0 * * *`
 - every sunday: `0 0 * * SUN`
 

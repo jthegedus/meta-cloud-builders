@@ -1,0 +1,42 @@
+tags:
+  - "cloud-builders-community"
+  - "trigger-sync"
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: "Build: trigger-sync image"
+    waitFor:
+      - "-"
+    args:
+      - "build"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/trigger-sync"
+      - "trigger-sync"
+  # sanity check
+  - name: gcr.io/$PROJECT_ID/trigger-sync
+    id: "Test: cloud-builder executes with trigger-sync/test triggers"
+    waitFor:
+      - "Build: trigger-sync image"
+    env:
+      - "TARGET_PROJECT_ID=$PROJECT_ID"
+      - "TRIGGERS_DIRECTORY=trigger-sync/test"
+      - "DEVELOPMENT_TESTING=true"
+  - name: gcr.io/$PROJECT_ID/trigger-sync
+    id: "Test: cloud-builder executes with .cicd/ triggers"
+    waitFor:
+      - "Build: trigger-sync image"
+    env:
+      - "TARGET_PROJECT_ID=$PROJECT_ID"
+      - "TRIGGERS_DIRECTORY=.cicd"
+      - "DEVELOPMENT_TESTING=true"
+  - name: gcr.io/$PROJECT_ID/trigger-sync
+    id: "Test: cloud-builder executes with no triggers"
+    waitFor:
+      - "Build: trigger-sync image"
+    env:
+      - "TARGET_PROJECT_ID=$PROJECT_ID"
+      - "TRIGGERS_DIRECTORY=trigger-sync/test/no-triggers"
+      - "DEVELOPMENT_TESTING=true"
+
+images:
+  - gcr.io/$PROJECT_ID/trigger-sync

@@ -5,7 +5,7 @@ github:
   name: meta-cloud-builders
   push:
     branch: master
-filename: .cicd/build-custom-builders.cloudbuild.yaml
+filename: .cicd/jobs/build-custom-builders.cloudbuild.yaml
 includedFiles:
-  - .cicd/build-custom-builders.cloudbuild.yaml # the Cloud Build job file
+  - .cicd/jobs/build-custom-builders.cloudbuild.yaml # the Cloud Build job file
   - .cicd/builders/custom-builders.yaml # the config file

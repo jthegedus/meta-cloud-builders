@@ -1,9 +1,17 @@
+tags:
+  - "cloud-builders-community"
+  - "meta-cloud-builder"
+
 steps:
   - name: gcr.io/cloud-builders/docker
     id: "Build: meta builder image"
     waitFor:
       - "-"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/meta-cloud-builder", "."]
+    args:
+      - "build"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/meta-cloud-builder"
+      - "meta-cloud-builder"
+
 images:
   - gcr.io/$PROJECT_ID/meta-cloud-builder
-tags: ["cloud-builders-community"]

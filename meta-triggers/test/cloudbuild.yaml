@@ -1,9 +1,0 @@
-steps:
-  # sanity check
-  - name: gcr.io/$PROJECT_ID/meta-triggers
-    id: "Build: custom images asynchronously"
-    waitFor:
-      - "-"
-    args:
-      - "meta-triggers/test"
-tags: ["cloud-builders-community", "test"]

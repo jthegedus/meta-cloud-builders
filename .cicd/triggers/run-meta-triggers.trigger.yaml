@@ -5,6 +5,6 @@ github:
   name: meta-cloud-builders
   push:
     branch: master
-filename: .cicd/apply-triggers.cloudbuild.yaml
+filename: .cicd/jobs/apply-triggers.cloudbuild.yaml
 includedFiles:
   - .cicd/**

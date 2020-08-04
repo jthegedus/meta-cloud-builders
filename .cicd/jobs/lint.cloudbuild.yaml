@@ -1,0 +1,30 @@
+tags:
+  - "lint"
+
+steps:
+  - name: gcr.io/$PROJECT_ID/cancelot
+    id: "Cancelot"
+    waitFor:
+      - "-"
+    args:
+      - "--current_build_id"
+      - "$BUILD_ID"
+      - "--branch_name"
+      - "$BRANCH_NAME"
+      - "--same_trigger_only"
+
+  - name: gcr.io/$PROJECT_ID/shellcheck
+    id: "Lint: Shellcheck"
+    waitFor:
+      - "Cancelot"
+    args:
+      - ./meta-cloud-builder/run.bash
+      - ./trigger-sync/run.bash
+
+  - name: mvdan/shfmt:latest-alpine
+    id: "Lint: shell format"
+    waitFor:
+      - "Cancelot"
+    args:
+      - "-d"
+      - "."

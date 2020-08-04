@@ -1,0 +1,10 @@
+name: build-trigger-sync
+description: "Build trigger-sync builder on change"
+github:
+  owner: jthegedus
+  name: meta-cloud-builders
+  pullRequest:
+    branch: .*
+filename: trigger-sync/cloudbuild.yaml
+includedFiles:
+  - trigger-sync/**
